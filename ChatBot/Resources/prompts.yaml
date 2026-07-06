@@ -1,0 +1,4 @@
+PROFILE_GRAPH:
+  PROMPT_SUPERVISOR_PATH: ./Resources/prompts/supervisor_prompt.md
+  PROMPT_SEARCH_PROFILE_PATH: ./Resources/prompts/search_profile_prompt.md
+  PROMPT_GET_PROFILE_DETAIL_PATH: ./Resources/prompts/get_profile_detail_prompt.md
