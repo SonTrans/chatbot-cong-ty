@@ -37,7 +37,7 @@ class BaseAgent:
                             ToolStandardizationMiddleware,
                             SummarizationMiddleware(
                                 self.model,
-                                trigger=("messages", 10) # Summary sau 10 messages
+                                trigger=("messages", 10)  # Summary sau 10 messages
                             )])
         agent = create_agent(
             self.model,
@@ -109,6 +109,5 @@ class BaseAgent:
             **response_json,
             "next_node": next_node
         }
-
         logger.info(f"--- NEXT NODE {next_node} FROM GeneralInfo---")
         return structured_output

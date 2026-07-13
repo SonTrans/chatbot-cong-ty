@@ -9,9 +9,6 @@ TEST_FILE ?= tests/unit_tests/
 test:
 	python -m pytest $(TEST_FILE)
 
-integration_tests:
-	python -m pytest tests/integration_tests 
-
 test_watch:
 	python -m ptw --snapshot-update --now . -- -vv tests/unit_tests
 
@@ -29,7 +26,8 @@ extended_tests:
 # Define a variable for Python and notebook files.
 PYTHON_FILES=src/
 MYPY_CACHE=.mypy_cache
-lint format: PYTHON_FILES=.
+lint: PYTHON_FILES=src 
+format: PYTHON_FILES=.
 lint_diff format_diff: PYTHON_FILES=$(shell git diff --name-only --diff-filter=d main | grep -E '\.py$$|\.ipynb$$')
 lint_package: PYTHON_FILES=src
 lint_tests: PYTHON_FILES=tests
@@ -64,4 +62,3 @@ help:
 	@echo 'tests                        - run unit tests'
 	@echo 'test TEST_FILE=<test_file>   - run all tests in file'
 	@echo 'test_watch                   - run unit tests in watch mode'
-
