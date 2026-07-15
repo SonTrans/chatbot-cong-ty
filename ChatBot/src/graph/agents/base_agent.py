@@ -2,7 +2,7 @@ import copy
 from typing import List
 
 from langchain.agents import create_agent
-from langchain.agents.middleware import SummarizationMiddleware, after_agent
+from langchain.agents.middleware import ContextEditingMiddleware ,ClearToolUsesEdit, after_agent
 from langchain_core.language_models import BaseChatModel
 from langchain_core.messages import BaseMessage
 from langchain_core.runnables import RunnableConfig
@@ -34,10 +34,12 @@ class BaseAgent:
         if middlewares is None:
             middlewares = []
         middlewares.extend([inject_config_prompt,
-                            ToolStandardizationMiddleware,
-                            SummarizationMiddleware(
-                                self.model,
-                                trigger=("messages", 10)  # Summary sau 10 messages
+                            ContextEditingMiddleware(
+                                edits=[
+                                    ClearToolUsesEdit(
+                                        trigger=1000
+                                    ),
+                                ]
                             )])
         agent = create_agent(
             self.model,
