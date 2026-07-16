@@ -10,7 +10,7 @@ class SupervisorAgent(BaseAgent):
                  runtime: Runtime[Context]):
         super().__init__(system_prompt_path, runtime)
 
-    async def ainvoke(self, state, runtime):
+    async def ainvoke(self, state, runtime, config=None):
         input_data = {
             "messages": state.messages,
             "memories": state.memories
@@ -20,5 +20,5 @@ class SupervisorAgent(BaseAgent):
                 url_mcp_servers=config_object.MCP.BASE_MCP_SERVER_URL,
                 required_tools=["search_archives", "get_profile_detail", "search_content","find_profile_and_answer"]
             )
-        response = await self.agent.ainvoke(input=input_data, runtime=runtime.context, stream=False)
+        response = await self.agent.ainvoke(input=input_data, runtime=runtime.context, config=config)
         return response

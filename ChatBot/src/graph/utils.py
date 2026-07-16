@@ -21,12 +21,20 @@ def load_model(llm_config: LLMConfig) -> BaseChatModel:
     else:
         provider = None
         model = llm_config.model_name
-    llm_model = init_chat_model(
-        model=model,
-        model_provider=provider,
-        temperature=llm_config.temperature,
-        timeout=llm_config.timeout,
-        max_retries=llm_config.max_retries,
-        max_tokens=llm_config.max_tokens
-    )
+    kwargs = {
+        "model": model,
+        "model_provider": provider,
+        "temperature": llm_config.temperature,
+        "timeout": llm_config.timeout,
+        "max_retries": llm_config.max_retries,
+        "max_tokens": llm_config.max_tokens,
+    }
+
+    if getattr(llm_config, 'base_url', None):
+        kwargs["base_url"] = llm_config.base_url
+        
+    if getattr(llm_config, 'api_key', None):
+        kwargs["api_key"] = llm_config.api_key
+        
+    llm_model = init_chat_model(**kwargs)
     return llm_model

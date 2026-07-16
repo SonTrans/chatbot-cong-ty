@@ -103,7 +103,7 @@ ChatBot/
       ```bash
       cp .env.example .env
       ```
-    - Mở tệp `.env` và điền các giá trị cần thiết như `OPENAI_API_KEY`, các khóa API MCP và biến môi trường liên quan khác.
+    - Mở tệp `.env` và điền các giá trị cần thiết như cấu hình LLM (`LLM_SERVICE_HOST`, `LLM_SERVICE_API_KEY`, v.v.), các khóa API MCP và biến môi trường liên quan khác.
 
 ### Chạy ứng dụng
 

@@ -76,8 +76,9 @@ class BaseAgent:
         self.response_class = copy.deepcopy(response_class)
         if not use_only_response_structured and self.response_class is not None:
             @after_agent
-            async def enforce_structured_wrapper(state: State, runtime: Runtime):
-                return await self.enforce_structured_output(state, runtime)
+            async def enforce_structured_wrapper(state: State, runtime: Runtime, **kwargs):
+                config = kwargs.get('config')
+                return await self.enforce_structured_output(state, runtime, config=config)
 
             middlewares.append(enforce_structured_wrapper)
             response_class = None
@@ -85,23 +86,23 @@ class BaseAgent:
         self.agent = self.init_agent(response_class, tools, middlewares)
         return self.agent
 
-    async def invoke(self, state, runtime):
+    async def invoke(self, state, runtime, config=None):
         pass
 
-    async def ainvoke(self, state, runtime):
+    async def ainvoke(self, state, runtime, config=None):
         pass
 
-    async def astream(self, state, runtime):
+    async def astream(self, state, runtime, config=None):
         pass
 
     @classmethod
     async def init_node(cls, state: State, config: RunnableConfig):
         pass
 
-    async def enforce_structured_output(self, state: State, runtime: Runtime):
+    async def enforce_structured_output(self, state: State, runtime: Runtime, config=None):
         messages: List[BaseMessage] = state["messages"]
         llm = load_model(runtime.context.llm_config).with_structured_output(self.response_class)
-        response = await llm.ainvoke(messages)
+        response = await llm.ainvoke(messages, config=config)
         next_node = response.next_node.upper()
         next_node = END if next_node == 'END' else next_node
 
