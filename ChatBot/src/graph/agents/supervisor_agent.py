@@ -23,7 +23,7 @@ class SupervisorAgent(BaseAgent):
         if self.agent is None:
             await self.setup_agent(
                 url_mcp_servers=config_object.MCP.BASE_MCP_SERVER_URL,
-                required_tools=["search_archives", "get_profile_detail", "search_content","find_profile_and_answer"]
+                required_tools=["search_archives"]
             )
         try:
             response = await asyncio.wait_for(
