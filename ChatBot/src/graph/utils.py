@@ -4,7 +4,6 @@ from langchain.chat_models import init_chat_model
 from langchain_core.language_models import BaseChatModel
 
 from src.graph.configuration import LLMConfig
-from src.config.configs import config_object
 
 
 def load_sys_prompt(prompt_path: str) -> str:
