@@ -20,6 +20,5 @@ class LLMConfig(BaseModel):
 class Context(BaseModel):
     conversation_id: Optional[str] = None
     customer_id: Optional[str] = None
-    attachments: Optional[list[dict]] = None
     response_timeout: Optional[float] = 120
     llm_config: Optional[LLMConfig] = LLMConfig()
